@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>owncloud_installation_procedure.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h5 id="022023--%22credit-by-floriant-and-skander%22">02/2023                               | &quot;Credit by Floriant and Skander&quot; |</h5>
+<h2 id="install-apache2-http-server">Install Apache2 HTTP Server</h2>
+<h5 id="install-apache2-on-ubuntu-by-running-the-following-commands">Install Apache2 on Ubuntu by running the following commands:</h5>
+<pre class="hljs"><code><div>sudo apt install apache2
+</div></code></pre>
+<h5 id="after-installing-apache2-run-the-commands-below-to-disable-directory-listing">After installing Apache2, run the commands below to disable directory listing:</h5>
+<pre class="hljs"><code><div>sudo sed -i <span class="hljs-string">"s/Options Indexes FollowSymLinks/Options FollowSymLinks/"</span> /etc/apache2/apache2.conf
+</div></code></pre>
+<h5 id="after-install-apache2-the-commands-below-can-be-used-to-stop-start-and-enable-apache2-service-to-always-start-up-with-the-server-boots">After install Apache2, the commands below can be used to stop, start and enable Apache2 service to always start up with the server boots.</h5>
+<pre class="hljs"><code><div>sudo systemctl stop apache2.service
+
+sudo systemctl start apache2.service
+
+sudo systemctl <span class="hljs-built_in">enable</span> apache2.service
+</div></code></pre>
+<h2 id="install-mariadb-server">Install Mariadb Server</h2>
+<h5 id="to-install-mariadb-run-the-commands-below">To install MariaDB run the commands below:</h5>
+<pre class="hljs"><code><div>sudo apt-get install mariadb-server mariadb-client
+</div></code></pre>
+<h5 id="the-commands-below-is-use-to-stop-start-and-enable-mariadb-servuce-to-always-start-up-when-the-server-boots">The commands below is use to stop, start and enable MariaDB servuce to always start up when the server boots</h5>
+<pre class="hljs"><code><div>sudo systemctl stop mariadb.service
+sudo systemctl start mariadb.service
+sudo systemctl <span class="hljs-built_in">enable</span> mariadb.service
+</div></code></pre>
+<h5 id="after-that-run-the-commands-below-to-secure-mariadb-server">After that, run the commands below to secure MariaDB server:</h5>
+<pre class="hljs"><code><div>sudo mysql_secure_installation
+</div></code></pre>
+<ul>
+<li>Enter current password for root(enter for none): Just press Enter</li>
+<li>Set root password: Yes</li>
+<li>New password: Enter password</li>
+<li>Re-enter new paswword: Repeat password</li>
+<li>remove anonymous user: Yes</li>
+<li>Disallow root login remotely: Yes</li>
+<li>Remove test database and access to it?: Yes</li>
+<li>Reload privilege tables now: Yes</li>
+</ul>
+<h5 id="restart-mariadb-service">Restart MariaDb Service:</h5>
+<pre class="hljs"><code><div>sudo systemctl restart mariadb.service
+</div></code></pre>
+<h2 id="installation-de-php74-and-related-modules-version-74-its-important">Installation de PHP7.4 and Related Modules (Version 7.4 it's important)</h2>
+<h5 id="run-the-commands-below-to-add-a-third-party-repository-and-upgrade-to-php-74">Run the commands below to add a third party repository and upgrade to PHP 7.4:</h5>
+<pre class="hljs"><code><div>sudo apt-get install software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php
+</div></code></pre>
+<h5 id="then-update-and-upgrade-to-php-74">Then update and upgrade to PHP 7.4:</h5>
+<pre class="hljs"><code><div>sudo apt update
+</div></code></pre>
+<h5 id="run-the-commands-below-to-install-php-74-and-related-modules">Run the commands below to install PHP 7.4 and related modules:</h5>
+<pre class="hljs"><code><div>sudo apt install php7.4 libapache2-mod-php7.4 php7.4-common php7.4-mbstring php7.4-xmlrpc php7.4-soap php7.4-apcu php7.4-smbclient php7.4-ldap php7.4-redis php7.4-gd php7.4-xml php7.4-intl php7.4-json php7.4-imagick php7.4-mysql php7.4-cli php7.4-mcrypt php7.4-ldap php7.4-zip php7.4-curl -y
+</div></code></pre>
+<h5 id="after-install-php-74-run-the-commands-below-to-open-fpm-php-default-file">After install PHP 7.4, run the commands below to open FPM PHP default file:</h5>
+<pre class="hljs"><code><div>sudo nano /etc/php/7.4/apache2/php.ini
+</div></code></pre>
+<p>changes the values :</p>
+<pre class="hljs"><code><div>file_uploads = On
+allow_url_fopen = On
+memory_limit = 256M
+upload_max_filesize = 100M
+display_errors = Off
+date.timezone = America/Florida
+</div></code></pre>
+<h2 id="create-owncloud-database">Create OwnCloud Database</h2>
+<p>Now that you’ve install all the required packages, continue to start configuring the server.</p>
+<h5 id="to-connect-to-mariadb-server-run-the-commands-below">To connect to MariaDB server, run the commands below:</h5>
+<pre class="hljs"><code><div>sudo mysql -u root -p
+</div></code></pre>
+<h5 id="then-create-a-database-called-owncloud">Then create a database called owncloud:</h5>
+<pre class="hljs"><code><div>CREATE DATABASE owncloud;
+</div></code></pre>
+<h5 id="create-a-database-user-called-ownclouduser-with-new-password">Create a database user called ownclouduser with new password:</h5>
+<pre class="hljs"><code><div>CREATE USER <span class="hljs-string">'ownclouduser'</span>@<span class="hljs-string">'localhost'</span> IDENTIFIED BY <span class="hljs-string">'password_here'</span>;
+</div></code></pre>
+<h5 id="then-grant-the-user-full-access-to-the-database">Then grant the user full access to the database:</h5>
+<pre class="hljs"><code><div>GRANT ALL ON owncloud.* TO <span class="hljs-string">'ownclouduser'</span>@<span class="hljs-string">'localhost'</span> IDENTIFIED BY <span class="hljs-string">'password_here'</span> WITH GRANT OPTION;
+</div></code></pre>
+<h4 id="now-save-your-changes-and-exit">Now, save your changes and exit:</h4>
+<pre class="hljs"><code><div>FLUSH PRIVILEGES;
+EXIT;
+</div></code></pre>
+<h2 id="download-latest-owncloud-release">Download Latest OwnCloud Release</h2>
+<h5 id="download-owncloud-for-ubuntu-2104">Download Owncloud FOR UBUNTU 21.04:</h5>
+<p>check your version here: https://software.opensuse.org//download.html?project=isv:ownCloud:server:10&amp;package=owncloud-complete-files</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> <span class="hljs-string">'deb http://download.opensuse.org/repositories/isv:/ownCloud:/server:/10/Ubuntu_21.04/ /'</span> | sudo tee /etc/apt/sources.list.d/isv:ownCloud:server:10.list
+curl -fsSL https://download.opensuse.org/repositories/isv:ownCloud:server:10/Ubuntu_21.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/isv_ownCloud_server_10.gpg &gt; /dev/null
+sudo apt update
+sudo apt install owncloud-complete-files
+<span class="hljs-built_in">cd</span> /var/www/
+</div></code></pre>
+<h5 id="move-the-folder-to-the-correct-place">move the folder to the correct place</h5>
+<pre class="hljs"><code><div>sudo mv owncloud /var/www/html/owncloud/
+</div></code></pre>
+<h5 id="then-run-the-commands-below-to-set-the-correct-permissions-for-owncloud-to-function">Then run the commands below to set the correct permissions for OwnCloud to function</h5>
+<pre class="hljs"><code><div>sudo chown -R www-data:www-data /var/www/html/owncloud/
+sudo chmod -R 755 /var/www/html/owncloud/
+</div></code></pre>
+<h2 id="configure-apache2">Configure Apache2</h2>
+<h5 id="go-back-to-home-with-this-command">Go back to home with this command:</h5>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span>
+</div></code></pre>
+<h5 id="configure-apache2-site-configuration-file-for-owncloud-this-file-will-control-how-users-access-owncloud-content-run-the-commands-below-to-create-a-new-configuration-file-called-owncloudconf">Configure Apache2 site configuration file for OwnCloud. This file will control how users access OwnCloud content. Run the commands below to create a new configuration file called owncloud.conf</h5>
+<pre class="hljs"><code><div>sudo nano /etc/apache2/sites-available/owncloud.conf
+</div></code></pre>
+<h5 id="then-copy-and-paste-the-content-below-into-the-file-and-save-it-replace-the-highlighted-in-red-lines-with-your-own-domain-name-and-directory-root-location-nb-you-have-to-change-the-servername-and-serveralias-l4l5">Then copy and paste the content below into the file and save it. Replace the highlighted in red lines with your own domain name and directory root location.  NB: you have to change the SERVERNAME AND SERVERALIAS L4,L5:</h5>
+<pre class="hljs"><code><div>&lt;VirtualHost \*:80&gt;
+ServerAdmin admin@example.com
+DocumentRoot /var/www/html/owncloud/
+ServerName avoiderrors.com
+ServerAlias www.avoiderrors.com
+
+     Alias /owncloud <span class="hljs-string">"/var/www/html/owncloud/"</span>
+
+     &lt;Directory /var/www/html/owncloud/&gt;
+        Options +FollowSymlinks
+        AllowOverride All
+        Require all granted
+          &lt;IfModule mod_dav.c&gt;
+            Dav off
+          &lt;/IfModule&gt;
+        SetEnv HOME /var/www/html/owncloud
+        SetEnv HTTP_HOME /var/www/html/owncloud
+     &lt;/Directory&gt;
+
+     ErrorLog <span class="hljs-variable">${APACHE_LOG_DIR}</span>/error.log
+     CustomLog <span class="hljs-variable">${APACHE_LOG_DIR}</span>/access.log combined
+
+&lt;/VirtualHost&gt;
+</div></code></pre>
+<h2 id="enable-the-owncloud-and-rewrite-module">Enable the OwnCloud and Rewrite Module:</h2>
+<h5 id="after-configuring-the-virtualhost-above-enable-it-by-running-the-commands-below">After configuring the VirtualHost above, enable it by running the commands below:</h5>
+<pre class="hljs"><code><div>sudo a2ensite owncloud.conf
+sudo a2enmod rewrite
+sudo a2enmod headers
+sudo a2enmod env
+sudo a2enmod dir
+sudo a2enmod mime
+</div></code></pre>
+<h2 id="restart-apache2">Restart Apache2</h2>
+<h5 id="to-load-all-the-settings-above-restart-apache2-by-running-the-commands-below">To load all the settings above, restart Apache2 by running the commands below.</h5>
+<pre class="hljs"><code><div>sudo systemctl restart apache2.service
+</div></code></pre>
+<h2 id="access-owncloud-from-the-lan">Access Owncloud from the LAN</h2>
+<p>1- Open the terminal and enter the following command:</p>
+<pre class="hljs"><code><div>sudo apt install net-tools
+ifconfig
+</div></code></pre>
+<p>2- Search for your local IP</p>
+<p>3- place your Local IP in the adress bar like this:</p>
+<p>http://192.XXX.XX.XX/owncloud</p>
+<h2 id="installation-de-fail2ban">Installation de Fail2ban</h2>
+<h5 id="update">Update</h5>
+<pre class="hljs"><code><div>sudo apt-get update
+</div></code></pre>
+<h5 id="to-install-fail2ban-run-the-commands-below">To install Fail2ban run the commands below:</h5>
+<pre class="hljs"><code><div>sudo apt-get install fail2ban
+</div></code></pre>
+<h5 id="go-to-file-owncloudconf">Go to file owncloud.conf</h5>
+<pre class="hljs"><code><div>sudo nano /etc/fail2ban/filter.d/owncloud.conf
+</div></code></pre>
+<h5 id="copy-and-paste-the-following-text-in-owncloudconf">copy and paste the following text in owncloud.conf:</h5>
+<pre class="hljs"><code><div>[Definition]
+failregex={<span class="hljs-string">"reqId"</span>:<span class="hljs-string">"."</span>,<span class="hljs-string">"remoteAddr"</span>:<span class="hljs-string">"&lt;HOST&gt;"</span>,<span class="hljs-string">"app"</span>:<span class="hljs-string">"core"</span>.<span class="hljs-string">"Invalid ._ credentials._"</span>}
+ignoreregex =
+</div></code></pre>
+<h5 id="go-to-file-owncloudconf">Go to file owncloud.conf</h5>
+<pre class="hljs"><code><div>sudo nano /etc/fail2ban/jail.d/owncloud.local
+</div></code></pre>
+<h5 id="copy-and-paste-the-following-text-in-owncloudlocal">copy and paste the following text in owncloud.local:</h5>
+<pre class="hljs"><code><div>[owncloud]
+enabled = <span class="hljs-literal">true</span>
+port = http,https
+filter = owncloud
+logpath = /var/<span class="hljs-built_in">log</span>/owncloud.log
+maxretry = 3
+bantime = 3600
+findtime = 600
+</div></code></pre>
+<h5 id="restart-fail2ban">Restart Fail2ban</h5>
+<pre class="hljs"><code><div>sudo service fail2ban restart
+</div></code></pre>
+<h2 id="images">Images</h2>
+<p><img src="Owncloudimg1.png" alt="Owncloud authentification page"></p>
+<p><img src="owncloudacceuil.png" alt="Owncloud Home page"></p>
+<p><img src="owncloudimgowncloud.png" alt="File2ban "></p>
+<p><img src="owncloudimgpartage.png" alt="Owncloud share files page"></p>
+<p><img src="owncloudimgusers.png" alt="Owncloud users page"></p>
+<h3 id="%22credit-by-floriant-and-skander%22">| &quot;Credit by Floriant and Skander&quot; |</h3>
+<p>sudo apt install php7.4 libapache2-mod-php7.4 php7.4-common php7.4-mbstring php7.4-xmlrpc php7.4-soap php7.4-apcu php7.4-smbclient php7.4-ldap php7.4-redis php7.4-gd php7.4-xml php7.4-intl php7.4-json php7.4-imagick php7.4-mysql php7.4-cli php7.4-mcrypt php7.4-ldap php7.4-zip php7.4-curl -y</p>
+
+</body>
+</html>
